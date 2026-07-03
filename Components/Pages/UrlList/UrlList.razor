@@ -1,0 +1,24 @@
+@using UrlSaver.Components.Pages.UrlList.UrlCard @using UrlSaver.Domain
+
+<div class="d-flex flex-row flex-wrap gap-2 container">
+    @foreach (UrlBookmark b in bookmarks)
+    {
+        <UrlCard bookmark="b" />
+    }
+</div>
+
+@code {
+    List<UrlBookmark> bookmarks = [
+    new UrlBookmark("Google", "https://www.google.com", "Lorem ipsum and some other shit.", ["Search", "Results"]),
+  new UrlBookmark("Google", "https://www.google.com", "Lorem ipsum and some other shit.", ["Search", "Results"]),
+  new UrlBookmark("Google", "https://www.google.com", "Lorem ipsum and some other shit.", ["Search", "Results"]),
+  new UrlBookmark("Google", "https://www.google.com", "Lorem ipsum and some other shit.", ["Search", "Results"]),
+  new UrlBookmark("Google", "https://www.google.com", "Lorem ipsum and some other shit.", ["Search", "Results"]),
+  new UrlBookmark("Google", "https://www.google.com", "Lorem ipsum and some other shit.", ["Search", "Results"]),
+  new UrlBookmark("Google", "https://www.google.com", "Lorem ipsum and some other shit.", ["Search", "Results"]),
+  new UrlBookmark("Google", "https://www.google.com", "Lorem ipsum and some other shit.", ["Search", "Results"]),
+  new UrlBookmark("Google", "https://www.google.com", "Lorem ipsum and some other shit.", ["Search", "Results"]),
+  new UrlBookmark("Google", "https://www.google.com", "Lorem ipsum and some other shit.", ["Search", "Results"]),
+  new UrlBookmark("Google", "https://www.google.com", "Lorem ipsum and some other shit.", ["Search", "Results"]),
+        ];
+}
