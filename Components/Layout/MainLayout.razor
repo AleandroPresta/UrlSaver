@@ -1,0 +1,14 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <Header Title="@Title" />
+    <main>
+        <article class="px-4 content container">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    public string Title = "Url Saver";
+}
