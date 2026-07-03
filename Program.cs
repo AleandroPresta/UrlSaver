@@ -1,4 +1,5 @@
 using UrlSaver.Components;
+using UrlSaver.Features.CreateBookmark;
 using UrlSaver.Features.GetBookmarks;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddScoped<GetBookmarksService>();
 builder.Services.AddScoped<IGetBookmarksRepository, InMemoryRepository>();
+builder.Services.AddScoped<CreateBookmarkService>();
 
 var app = builder.Build();
 
