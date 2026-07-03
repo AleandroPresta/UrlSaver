@@ -4,7 +4,7 @@
   <div class="card-body">
     <h5 class="card-title">@bookmark.Name</h5>
     <h6 class="mb-2 text-body-secondary card-subtitle">@string.Join(", ", @bookmark.Tags)</h6>
-    <p class="card-text">@bookmark.Description</p>
+    <p class="text-truncate card-text" style="max-height: 200px;">@bookmark.Description</p>
     <a href="@bookmark.Url" class="card-link">Link</a>
   </div>
 </div>

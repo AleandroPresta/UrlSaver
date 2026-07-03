@@ -1,9 +1,36 @@
 ﻿@page "/"
 @using UrlSaver.Components.UrlList
+@using UrlSaver.Domain
+@using UrlSaver.Features.GetBookmarks
+@inject GetBookmarksService _service;
 
 <PageTitle>Url Saver | Home</PageTitle>
 
-<div class="container">
-    <h2>Url Bookmarks</h2>
-    <UrlList />
-</div>
+<h2>Url Bookmarks</h2>
+@if (bookmarks.Any())
+{
+    <UrlList bookmarks="@bookmarks" />
+}
+else
+{
+    <p>No elements</p>
+}
+
+@code {
+    [SupplyParameterFromQuery]
+    public int PageNo { get; set; } = 1;
+
+    [SupplyParameterFromQuery]
+    public int PageSize { get; set; } = 10;
+    List<UrlBookmark> bookmarks = [];
+
+    protected override void OnInitialized()
+    {
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        bookmarks = _service.GetBookmarks(new GetBookmarksRequest(PageNo, PageSize));
+    }
+
+}
