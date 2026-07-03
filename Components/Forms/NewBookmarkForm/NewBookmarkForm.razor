@@ -27,6 +27,6 @@
     private async Task Save()
     {
         await _service.New(_newBookmark);
-        Navigation.NavigateTo("/");
+        Navigation.NavigateTo("/"); // TODO navigation doesn't seem to work
     }
 }
