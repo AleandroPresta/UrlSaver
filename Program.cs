@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using UrlSaver.Components;
-using UrlSaver.Features.CreateBookmark;
-using UrlSaver.Features.DeleteBookmark;
-using UrlSaver.Features.EditBookmark;
-using UrlSaver.Features.GetBookmarks;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress),
+});
 
 var url = builder.Configuration["Supabase:Url"];
 var key = builder.Configuration["Supabase:AnonKey"];
@@ -26,6 +26,7 @@ var options = new Supabase.SupabaseOptions { AutoRefreshToken = true, AutoConnec
 
 builder.Services.AddSingleton(_ => new Supabase.Client(url, key, options));
 builder.Services.AddScoped<GetBookmarksService>();
+builder.Services.AddScoped<GetBookmarkService>();
 builder.Services.AddScoped<CreateBookmarkService>();
 builder.Services.AddScoped<DeleteBookmarkService>();
 builder.Services.AddScoped<EditBookmarkService>();
