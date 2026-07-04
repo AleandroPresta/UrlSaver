@@ -13,7 +13,14 @@ public class GetBookmarksService
 
     public async Task<List<UrlBookmark>> GetBookmarks()
     {
-        var result = await _supabase.From<UrlBookmark>().Get();
-        return result.Models ?? [];
+        try
+        {
+            var result = await _supabase.From<UrlBookmark>().Get();
+            return result.Models ?? [];
+        }
+        catch
+        {
+            return [];
+        }
     }
 }

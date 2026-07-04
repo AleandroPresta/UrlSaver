@@ -1,46 +1,33 @@
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using UrlSaver.Components;
 using UrlSaver.Features.CreateBookmark;
 using UrlSaver.Features.DeleteBookmark;
 using UrlSaver.Features.EditBookmark;
 using UrlSaver.Features.GetBookmarks;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Add services to the container.
-builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+var url = builder.Configuration["Supabase:Url"];
+var key = builder.Configuration["Supabase:AnonKey"];
 
-DotNetEnv.Env.Load();
-var url = DotNetEnv.Env.GetString("SUPABASE_URL");
-var key = DotNetEnv.Env.GetString("SUPABASE_KEY");
-var options = new Supabase.SupabaseOptions
+if (string.IsNullOrWhiteSpace(url) || string.IsNullOrWhiteSpace(key))
 {
-    AutoRefreshToken = true,
-    AutoConnectRealtime = true,
-    // SessionHandler = new SupabaseSessionHandler() <-- This must be implemented by the developer
-};
+    Console.Error.WriteLine(
+        "Supabase config is missing. Set Supabase:Url and Supabase:AnonKey in wwwroot/appsettings.json or Netlify env vars."
+    );
+    url = "https://example.invalid";
+    key = "invalid";
+}
 
-// Note the creation as a singleton.
-builder.Services.AddSingleton(provider => new Supabase.Client(url, key, options));
+var options = new Supabase.SupabaseOptions { AutoRefreshToken = true, AutoConnectRealtime = true };
+
+builder.Services.AddSingleton(_ => new Supabase.Client(url, key, options));
 builder.Services.AddScoped<GetBookmarksService>();
 builder.Services.AddScoped<CreateBookmarkService>();
 builder.Services.AddScoped<DeleteBookmarkService>();
 builder.Services.AddScoped<EditBookmarkService>();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
-app.UseHttpsRedirection();
-
-app.UseAntiforgery();
-
-app.MapStaticAssets();
-app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
-
-app.Run();
+await builder.Build().RunAsync();

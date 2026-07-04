@@ -1,5 +1,9 @@
-@page "/edit/{id:int}"
+@page "/edit/{Id:int}"
 @using UrlSaver.Components.Forms.EditBookmarkForm
 <PageTitle>Url Saver | New</PageTitle>
 
-<EditBookmarkForm />
+<EditBookmarkForm Id="@Id" />
+
+@code {
+    public int Id { get; set; }
+}

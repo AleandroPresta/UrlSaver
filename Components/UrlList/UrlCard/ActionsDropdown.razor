@@ -1,3 +1,5 @@
+@inject NavigationManager NavigationManager
+
 <div class="btn-group">
     <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots"
@@ -7,7 +9,7 @@
         </svg>
     </button>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Edit</a></li>
+        <li><button class="dropdown-item" onclick="HandleEditClick" </button></li>
         <!-- Button trigger modal -->
         <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
             Delete
@@ -38,4 +40,9 @@
 @code {
     [Parameter]
     public int BookmarkId { get; set; } = -1;
+
+    public void HandleEditClick()
+    {
+        NavigationManager.NavigateTo($"/Edit/{BookmarkId}");
+    }
 }
