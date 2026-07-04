@@ -1,0 +1,9 @@
+global using Microsoft.AspNetCore.Components.Web;
+global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+global using UrlSaver;
+global using UrlSaver.Domain;
+global using UrlSaver.Features.CreateBookmark;
+global using UrlSaver.Features.DeleteBookmark;
+global using UrlSaver.Features.EditBookmark;
+global using UrlSaver.Features.GetBookmark;
+global using UrlSaver.Features.GetBookmarks;

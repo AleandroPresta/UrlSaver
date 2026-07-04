@@ -1,5 +1,3 @@
-using UrlSaver.Domain;
-
 namespace UrlSaver.Features.GetBookmark;
 
 public class GetBookmarkService

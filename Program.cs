@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using DotNetEnv;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -10,8 +9,9 @@ builder.Services.AddScoped(sp => new HttpClient
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress),
 });
 
-var url = builder.Configuration["Supabase:Url"];
-var key = builder.Configuration["Supabase:AnonKey"];
+Env.Load();
+var url = Env.GetString("SUPABASE_URL");
+var key = Env.GetString("SUPABASE_KEY");
 
 if (string.IsNullOrWhiteSpace(url) || string.IsNullOrWhiteSpace(key))
 {
@@ -20,6 +20,10 @@ if (string.IsNullOrWhiteSpace(url) || string.IsNullOrWhiteSpace(key))
     );
     url = "https://example.invalid";
     key = "invalid";
+}
+else
+{
+    Console.WriteLine($"Using Supabase Url: {url}");
 }
 
 var options = new Supabase.SupabaseOptions { AutoRefreshToken = true, AutoConnectRealtime = true };
