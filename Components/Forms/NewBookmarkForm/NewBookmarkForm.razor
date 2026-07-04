@@ -1,13 +1,16 @@
 @using UrlSaver.Domain
 @using UrlSaver.Features.CreateBookmark
+@rendermode InteractiveServer
 @inject NavigationManager Navigation
 @inject CreateBookmarkService _service
 
-<EditForm Model="_newBookmark" OnValidSubmit="Save" FormName="CreateBookmarkForm">
+<EditForm Model="_newBookmark" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit"
+          FormName="CreateBookmarkForm">
     <DataAnnotationsValidator />
     <div class="mb-3">
         <label for="nameControl" class="form-label">Name</label>
         <InputText @bind-Value="_newBookmark.Name" class="form-control" id="nameControl" />
+        <p>Current value: @_newBookmark.Name</p>
     </div>
     <div class="mb-3">
         <label for="urlControl" class="form-label">Url</label>
@@ -24,9 +27,28 @@
 @code {
     private UrlBookmark _newBookmark = new();
 
-    private async Task Save()
+    private async Task OnValidSubmit()
     {
         await _service.New(_newBookmark);
-        Navigation.NavigateTo("/"); // TODO navigation doesn't seem to work
+    }
+
+    private void OnInvalidSubmit(EditContext editContext)
+    {
+        foreach (var property in typeof(UrlBookmark).GetProperties())
+        {
+            var field = new FieldIdentifier(_newBookmark, property.Name);
+
+            var messages = editContext.GetValidationMessages(field);
+
+            if (messages.Any())
+            {
+                Console.WriteLine($"{property.Name}:");
+
+                foreach (var message in messages)
+                {
+                    Console.WriteLine($"  {message}");
+                }
+            }
+        }
     }
 }

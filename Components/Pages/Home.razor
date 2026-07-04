@@ -17,16 +17,11 @@ else
 }
 
 @code {
-    [SupplyParameterFromQuery]
-    public int PageNo { get; set; } = 1;
-
-    [SupplyParameterFromQuery]
-    public int PageSize { get; set; } = 10;
     List<UrlBookmark> bookmarks = [];
 
     protected override async Task OnParametersSetAsync()
     {
-        bookmarks = await _service.GetBookmarks(new GetBookmarksRequest(PageNo, PageSize));
+        bookmarks = await _service.GetBookmarks();
     }
 
 }

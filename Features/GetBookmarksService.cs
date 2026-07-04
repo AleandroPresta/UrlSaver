@@ -2,18 +2,18 @@ using UrlSaver.Domain;
 
 namespace UrlSaver.Features.GetBookmarks;
 
-public class GetBookmarksRepository
+public class GetBookmarksService
 {
     private readonly Supabase.Client _supabase;
 
-    public GetBookmarksRepository(Supabase.Client supabase)
+    public GetBookmarksService(Supabase.Client supabase)
     {
         _supabase = supabase;
     }
 
-    public async Task<List<UrlBookmark>> GetBookmarksAsync(int pageNo, int pageSize)
+    public async Task<List<UrlBookmark>> GetBookmarks()
     {
         var result = await _supabase.From<UrlBookmark>().Get();
-        return result.Models;
+        return result.Models ?? [];
     }
 }

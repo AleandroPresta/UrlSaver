@@ -3,18 +3,25 @@ using UrlSaver.Features.CreateBookmark;
 using UrlSaver.Features.DeleteBookmark;
 using UrlSaver.Features.EditBookmark;
 using UrlSaver.Features.GetBookmarks;
-using UrlSaver.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
-builder.Services.AddSingleton<SupabaseClient>();
-builder.Services.AddSingleton(sp => sp.GetRequiredService<SupabaseClient>().supabase);
+DotNetEnv.Env.Load();
+var url = DotNetEnv.Env.GetString("SUPABASE_URL");
+var key = DotNetEnv.Env.GetString("SUPABASE_KEY");
+var options = new Supabase.SupabaseOptions
+{
+    AutoRefreshToken = true,
+    AutoConnectRealtime = true,
+    // SessionHandler = new SupabaseSessionHandler() <-- This must be implemented by the developer
+};
+
+// Note the creation as a singleton.
+builder.Services.AddSingleton(provider => new Supabase.Client(url, key, options));
 builder.Services.AddScoped<GetBookmarksService>();
-builder.Services.AddScoped<GetBookmarksRepository>();
 builder.Services.AddScoped<CreateBookmarkService>();
 builder.Services.AddScoped<DeleteBookmarkService>();
 builder.Services.AddScoped<EditBookmarkService>();
@@ -34,7 +41,6 @@ app.UseHttpsRedirection();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.Run();
