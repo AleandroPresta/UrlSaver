@@ -1,7 +1,6 @@
-@using UrlSaver.Domain
-@using UrlSaver.Features.EditBookmark
 @inject NavigationManager Navigation
-@inject EditBookmarkService _service
+@inject EditBookmarkService _editService
+@inject GetBookmarkService _getService
 
 <EditForm Model="_bookmark" OnValidSubmit="Edit" FormName="EditBookmarkForm">
     <DataAnnotationsValidator />
@@ -22,11 +21,18 @@
 </EditForm>
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
     private UrlBookmark _bookmark = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _bookmark = await _getService.GetBookmarkById(Id) ?? new();
+    }
 
     private async Task Edit()
     {
-        await _service.Edit(_bookmark);
+        await _editService.Edit(_bookmark);
         Navigation.NavigateTo("/"); // TODO navigation doesn't seem to work
     }
 }

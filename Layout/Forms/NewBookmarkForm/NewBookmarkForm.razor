@@ -1,6 +1,4 @@
-@using UrlSaver.Domain
 @using UrlSaver.Features.CreateBookmark
-@rendermode InteractiveServer
 @inject NavigationManager Navigation
 @inject CreateBookmarkService _service
 
@@ -10,7 +8,6 @@
     <div class="mb-3">
         <label for="nameControl" class="form-label">Name</label>
         <InputText @bind-Value="_newBookmark.Name" class="form-control" id="nameControl" />
-        <p>Current value: @_newBookmark.Name</p>
     </div>
     <div class="mb-3">
         <label for="urlControl" class="form-label">Url</label>

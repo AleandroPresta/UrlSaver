@@ -1,0 +1,11 @@
+@page "/Edit/{Id:int}"
+<PageTitle>Url Saver | Edit</PageTitle>
+
+<EditBookmarkForm Id="@Id" />
+
+<p>Test</p>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+}

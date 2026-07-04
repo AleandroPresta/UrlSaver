@@ -1,5 +1,3 @@
-using UrlSaver.Domain;
-
 namespace UrlSaver.Features.DeleteBookmark;
 
 public class DeleteBookmarkService
