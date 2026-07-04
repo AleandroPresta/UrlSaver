@@ -1,5 +1,3 @@
-using DotNetEnv;
-
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
@@ -9,15 +7,14 @@ builder.Services.AddScoped(sp => new HttpClient
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress),
 });
 
-Env.Load();
-var url = Env.GetString("SUPABASE_URL");
-var key = Env.GetString("SUPABASE_KEY");
+Console.WriteLine("Starting up...");
+
+var url = builder.Configuration["Supabase:Url"];
+var key = builder.Configuration["Supabase:Key"];
 
 if (string.IsNullOrWhiteSpace(url) || string.IsNullOrWhiteSpace(key))
 {
-    Console.Error.WriteLine(
-        "Supabase config is missing. Set Supabase:Url and Supabase:AnonKey in wwwroot/appsettings.json or Netlify env vars."
-    );
+    Console.Error.WriteLine("Supabase config is missing.");
     url = "https://example.invalid";
     key = "invalid";
 }
