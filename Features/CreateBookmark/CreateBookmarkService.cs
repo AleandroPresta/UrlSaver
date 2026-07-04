@@ -8,6 +8,5 @@ public class CreateBookmarkService
 
     public async Task New(UrlBookmark bookmark)
     {
-        Console.WriteLine($"Name: {bookmark.Name}");
     }
 }

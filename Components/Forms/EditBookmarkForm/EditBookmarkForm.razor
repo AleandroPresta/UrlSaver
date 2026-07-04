@@ -1,0 +1,32 @@
+@using UrlSaver.Domain
+@using UrlSaver.Features.EditBookmark
+@inject NavigationManager Navigation
+@inject EditBookmarkService _service
+
+<EditForm Model="_bookmark" OnValidSubmit="Edit" FormName="EditBookmarkForm">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="nameControl" class="form-label">Name</label>
+        <InputText @bind-Value="_bookmark.Name" class="form-control" id="nameControl" />
+    </div>
+    <div class="mb-3">
+        <label for="urlControl" class="form-label">Url</label>
+        <InputText @bind-Value="_bookmark.Url" class="form-control" id="urlControl" />
+    </div>
+    <div class="mb-3">
+        <label for="descriptionControl" class="form-label">Description</label>
+        <InputTextArea @bind-Value="_bookmark.Description" class="form-control" id="descriptionControl" rows="3" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">Edit</button>
+</EditForm>
+
+@code {
+    private UrlBookmark _bookmark = new();
+
+    private async Task Edit()
+    {
+        await _service.Edit(_bookmark);
+        Navigation.NavigateTo("/"); // TODO navigation doesn't seem to work
+    }
+}
