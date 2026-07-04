@@ -2,7 +2,11 @@
 
 <div class="card" style="width: 25rem;">
   <div class="card-body">
-    <h5 class="card-title">@bookmark.Name</h5>
+    <!-- Card header -->
+    <div class="d-flex flex-row justify-content-between w-100 card-title">
+      <h5>@bookmark.Name</h5>
+      <ActionsDropdown BookmarkId="@bookmark.Id" />
+    </div>
     <h6 class="mb-2 text-body-secondary card-subtitle">@string.Join(", ", @bookmark.Tags)</h6>
     <p class="text-truncate card-text" style="max-height: 200px;">@bookmark.Description</p>
     <a href="@bookmark.Url" class="card-link">Link</a>
