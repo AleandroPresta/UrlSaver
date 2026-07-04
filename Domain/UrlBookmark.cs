@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Models;
 
 namespace UrlSaver.Domain;
 
 [Table("UrlBookmarks")]
-public class UrlBookmark
+public class UrlBookmark : BaseModel
 {
     [PrimaryKey]
     [Column("id")]

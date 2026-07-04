@@ -1,6 +1,9 @@
 using UrlSaver.Components;
 using UrlSaver.Features.CreateBookmark;
+using UrlSaver.Features.DeleteBookmark;
+using UrlSaver.Features.EditBookmark;
 using UrlSaver.Features.GetBookmarks;
+using UrlSaver.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,9 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddSingleton<SupabaseClient>();
+builder.Services.AddSingleton(sp => sp.GetRequiredService<SupabaseClient>().supabase);
 builder.Services.AddScoped<GetBookmarksService>();
-builder.Services.AddScoped<IGetBookmarksRepository, InMemoryRepository>();
+builder.Services.AddScoped<GetBookmarksRepository>();
 builder.Services.AddScoped<CreateBookmarkService>();
+builder.Services.AddScoped<DeleteBookmarkService>();
+builder.Services.AddScoped<EditBookmarkService>();
 
 var app = builder.Build();
 

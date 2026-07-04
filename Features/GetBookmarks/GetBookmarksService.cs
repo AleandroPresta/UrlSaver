@@ -4,16 +4,19 @@ namespace UrlSaver.Features.GetBookmarks;
 
 public class GetBookmarksService
 {
-    private readonly IGetBookmarksRepository _repository;
+    private readonly GetBookmarksRepository _repository;
 
-    public GetBookmarksService(IGetBookmarksRepository repository)
+    public GetBookmarksService(GetBookmarksRepository repository)
     {
         _repository = repository;
     }
 
-    public List<UrlBookmark> GetBookmarks(GetBookmarksRequest request)
+    public async Task<List<UrlBookmark>> GetBookmarks(GetBookmarksRequest request)
     {
-        List<UrlBookmark> items = _repository.GetBookmarks(request.PageNo, request.PageSize);
+        List<UrlBookmark> items = await _repository.GetBookmarksAsync(
+            request.PageNo,
+            request.PageSize
+        );
         return items ?? [];
     }
 }
