@@ -1,4 +1,6 @@
-# ./netlify.toml
+[build]
+  command = "chmod +x scripts/generate-appsettings.sh && ./scripts/generate-appsettings.sh && dotnet publish UrlSaver.csproj -c Release"
+  publish = "bin/Release/net10.0/publish/wwwroot"
 
 [[redirects]]
   from = "/*"
