@@ -1,0 +1,16 @@
+<div class="card" style="width: 25rem;">
+  <div class="card-body">
+    <!-- Card header -->
+    <div class="d-flex flex-row justify-content-between w-100 card-title">
+      <h5>@bookmark.Name</h5>
+      <ActionsDropdown BookmarkId="@bookmark.Id" />
+    </div>
+    <p class="text-truncate card-text" style="max-height: 200px;">@bookmark.Description</p>
+    <a href="@bookmark.Url" class="card-link">Link</a>
+  </div>
+</div>
+
+@code {
+  [Parameter]
+  public UrlBookmark bookmark { get; set; } = new UrlBookmark{Name = "N/A", Url = "N/A", Description = "N/A"};
+}

@@ -1,0 +1,27 @@
+﻿@page "/"
+@using UrlSaver.Features.GetBookmarks
+@inject GetBookmarksService _service;
+@inject IConfiguration Configuration
+
+<PageTitle>Url Saver | Home</PageTitle>
+
+<h2>Url Bookmarks</h2>
+
+@if (bookmarks.Any())
+{
+    <UrlList bookmarks="@bookmarks" />
+}
+else
+{
+    <p>No elements</p>
+}
+
+@code {
+    List<UrlBookmark> bookmarks = [];
+
+    protected override async Task OnParametersSetAsync()
+    {
+        bookmarks = await _service.GetBookmarks();
+    }
+
+}

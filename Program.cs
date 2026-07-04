@@ -1,33 +1,35 @@
-using UrlSaver.Components;
-using UrlSaver.Features.CreateBookmark;
-using UrlSaver.Features.GetBookmarks;
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
-
-builder.Services.AddScoped<GetBookmarksService>();
-builder.Services.AddScoped<IGetBookmarksRepository, InMemoryRepository>();
-builder.Services.AddScoped<CreateBookmarkService>();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+builder.Services.AddScoped(sp => new HttpClient
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress),
+});
+
+Console.WriteLine("Starting up...");
+
+var url = builder.Configuration["Supabase:Url"];
+var key = builder.Configuration["Supabase:Key"];
+
+if (string.IsNullOrWhiteSpace(url) || string.IsNullOrWhiteSpace(key))
+{
+    Console.Error.WriteLine("Supabase config is missing.");
+    url = "https://example.invalid";
+    key = "invalid";
 }
-app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
-app.UseHttpsRedirection();
+else
+{
+    Console.WriteLine($"Using Supabase Url: {url}");
+}
 
-app.UseAntiforgery();
+var options = new Supabase.SupabaseOptions { AutoRefreshToken = true, AutoConnectRealtime = true };
 
-app.MapStaticAssets();
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+builder.Services.AddSingleton(_ => new Supabase.Client(url, key, options));
+builder.Services.AddScoped<GetBookmarksService>();
+builder.Services.AddScoped<GetBookmarkService>();
+builder.Services.AddScoped<CreateBookmarkService>();
+builder.Services.AddScoped<DeleteBookmarkService>();
+builder.Services.AddScoped<EditBookmarkService>();
 
-app.Run();
+await builder.Build().RunAsync();

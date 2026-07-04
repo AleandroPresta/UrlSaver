@@ -1,0 +1,48 @@
+@inject NavigationManager NavigationManager
+
+<div class="btn-group">
+    <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots"
+             viewBox="0 0 16 16">
+            <path
+            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+        </svg>
+    </button>
+    <ul class="dropdown-menu">
+        <li><button class="dropdown-item" @onclick="HandleEditClick">Edit</button></li>
+        <!-- Button trigger modal -->
+        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
+            Delete
+        </button>
+    </ul>
+</div>
+
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this entry?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int BookmarkId { get; set; } = -1;
+
+    public void HandleEditClick()
+    {
+        NavigationManager.NavigateTo($"/Edit/{BookmarkId}");
+    }
+}
