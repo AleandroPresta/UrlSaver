@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UrlSaver</title>
     <base href="/" />
+    <script type="text/javascript">
+        (function () {
+            var base = document.querySelector('base');
+            if (!base) return;
+
+            var isGitHubPages = window.location.hostname.endsWith('github.io');
+            base.setAttribute('href', isGitHubPages ? '/UrlSaver/' : '/');
+        }());
+    </script>
     <link rel="preload" id="webassembly" />
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/app.css" />
