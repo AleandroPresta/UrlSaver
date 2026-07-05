@@ -33,6 +33,6 @@
     private async Task Edit()
     {
         await _editService.Edit(_bookmark);
-        Navigation.NavigateTo("");
+        Navigation.NavigateTo(Navigation.ToAbsoluteUri("").ToString());
     }
 }
