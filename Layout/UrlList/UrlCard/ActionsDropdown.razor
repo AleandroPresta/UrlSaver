@@ -43,6 +43,6 @@
 
     public void HandleEditClick()
     {
-        NavigationManager.NavigateTo($"/Edit/{BookmarkId}");
+        NavigationManager.NavigateTo(NavigationManager.ToAbsoluteUri($"Edit/{BookmarkId}").ToString());
     }
 }
