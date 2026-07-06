@@ -1,0 +1,134 @@
+// ==========================================
+// 1. SUPABASE DESIGN TOKENS
+// ==========================================
+$sb-black: #0c0c0c; // Base canvas background
+$sb-gray-900: #121212; // Card/Panel background
+$sb-gray-800: #1e1e1e; // Secondary panels / Dropdowns
+$sb-gray-700: #2e2e2e; // Component borders (crisp & subtle)
+$sb-gray-600: #3e3e3e; // Hover border lines
+$sb-green: #3ecf8e; // Signature accent emerald
+$sb-green-hover: #30b37a;
+
+$sb-text-main: #ededed; // Crisp white for primary reading
+$sb-text-muted: #8b8b8b; // Low-contrast gray for metadata
+
+// ==========================================
+// 2. BOOTSTRAP VARIABLE OVERRIDES
+// ==========================================
+// Core Options
+$enable-gradients: false;
+$enable-shadows: false;
+
+// Typography
+$font-family-sans-serif:
+  "Inter",
+  system-ui,
+  -apple-system,
+  sans-serif;
+$font-family-monospace: "Geist Mono", "Fira Code", monospace;
+
+// System Colors
+$primary: $sb-green;
+$body-bg: $sb-black;
+$body-color: $sb-text-main;
+
+// Global Components
+$border-color: $sb-gray-700;
+$border-radius: 0.375rem; // Clean 6px modern corner radius
+$border-radius-sm: 0.25rem;
+
+// Cards
+$card-bg: $sb-gray-900;
+$card-border-color: $sb-gray-700;
+$card-border-radius: $border-radius;
+$card-spacer-y: 1.25rem;
+$card-spacer-x: 1.25rem;
+
+// Buttons
+$btn-padding-y: 0.375rem;
+$btn-padding-x: 0.75rem;
+$btn-font-weight: 500;
+$btn-border-radius: $border-radius;
+$link-color: $sb-green;
+$link-hover-color: $sb-green-hover;
+
+// Form Inputs
+$input-bg: $sb-black;
+$input-border-color: $sb-gray-700;
+$input-color: $sb-text-main;
+$input-placeholder-color: $sb-text-muted;
+$input-focus-bg: $sb-black;
+$input-focus-border-color: $sb-green;
+$input-focus-width: 1px;
+$input-focus-box-shadow: 0 0 0 1px $sb-green;
+
+// Navs & Tabs
+$nav-link-color: $sb-text-muted;
+$nav-link-hover-color: $sb-text-main;
+$nav-tabs-border-color: $sb-gray-700;
+$nav-tabs-link-hover-border-color: transparent;
+
+// ==========================================
+// 3. BOOTSTRAP IMPORT
+// ==========================================
+@import "bootstrap/scss/bootstrap";
+
+// ==========================================
+// 4. CUSTOM UTILITIES & DASHBOARD SPECIFICS
+// ==========================================
+.sidebar-wrapper {
+  background-color: $sb-gray-900;
+  border-right: 1px solid $sb-gray-700;
+  min-height: 100vh;
+}
+
+.nav-sidebar {
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    color: $sb-text-muted;
+    border-radius: $border-radius;
+    margin-bottom: 0.25rem;
+
+    &:hover,
+    &.active {
+      color: $sb-text-main;
+      background-color: $sb-gray-800;
+    }
+    &.active {
+      border-left: 2px solid $sb-green;
+    }
+  }
+}
+
+// Supabase Monospace Data Accents
+.db-id-badge {
+  font-family: $font-family-monospace;
+  font-size: 0.75rem;
+  background-color: $sb-gray-800;
+  color: $sb-text-muted;
+  padding: 0.125rem 0.375rem;
+  border: 1px solid $sb-gray-700;
+  border-radius: 4px;
+}
+
+.table-supabase {
+  font-size: 0.875rem;
+  th {
+    color: $sb-text-muted;
+    font-weight: 500;
+    background-color: transparent !important;
+    border-bottom: 1px solid $sb-gray-700;
+  }
+  td {
+    color: $sb-text-main;
+    background-color: transparent !important;
+    border-bottom: 1px solid $sb-gray-700;
+    vertical-align: middle;
+  }
+}
+
+@import "../scss/bootstrap/bootstrap";
