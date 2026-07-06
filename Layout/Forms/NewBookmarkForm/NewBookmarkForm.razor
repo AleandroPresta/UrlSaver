@@ -27,6 +27,7 @@
     private async Task OnValidSubmit()
     {
         await _service.New(_newBookmark);
+        Navigation.NavigateTo(Navigation.ToAbsoluteUri("").ToString());
     }
 
     private void OnInvalidSubmit(EditContext editContext)
