@@ -1,4 +1,5 @@
 @inject NavigationManager NavigationManager
+@inject DeleteBookmarkService _service;
 
 <div class="btn-group">
     <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -11,30 +12,10 @@
     <ul class="dropdown-menu">
         <li><button class="dropdown-item" @onclick="HandleEditClick">Edit</button></li>
         <!-- Button trigger modal -->
-        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
+        <button type="button" class="dropdown-item" @onclick="HandleDeleteClick">
             Delete
         </button>
     </ul>
-</div>
-
-
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this entry?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Confirm</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 @code {
@@ -43,6 +24,11 @@
 
     public void HandleEditClick()
     {
-        NavigationManager.NavigateTo($"/Edit/{BookmarkId}");
+        NavigationManager.NavigateTo(NavigationManager.ToAbsoluteUri($"Edit/{BookmarkId}").ToString());
+    }
+
+    public async Task HandleDeleteClick()
+    {
+        NavigationManager.NavigateTo(NavigationManager.ToAbsoluteUri($"Delete/{BookmarkId}").ToString());
     }
 }

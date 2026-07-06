@@ -1,8 +1,8 @@
-@inject NavigationManager Navigation
+@inject NavigationManager NavigationManager
 @inject EditBookmarkService _editService
 @inject GetBookmarkService _getService
 
-<EditForm Model="_bookmark" OnValidSubmit="Edit" FormName="EditBookmarkForm">
+<EditForm Model="_bookmark" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit" FormName="EditBookmarkForm">
     <DataAnnotationsValidator />
     <div class="mb-3">
         <label for="nameControl" class="form-label">Name</label>
@@ -30,9 +30,14 @@
         _bookmark = await _getService.GetBookmarkById(Id) ?? new();
     }
 
-    private async Task Edit()
+    private async Task OnValidSubmit()
     {
         await _editService.Edit(_bookmark);
-        Navigation.NavigateTo("/"); // TODO navigation doesn't seem to work
+        NavigationManager.NavigateTo(NavigationManager.ToAbsoluteUri("").ToString());
+    }
+
+    private async Task OnInvalidSubmit()
+    {
+        // TODO implement
     }
 }

@@ -12,7 +12,10 @@ public class GetBookmarkService
     public async Task<UrlBookmark?> GetBookmarkById(int id)
     {
         // A result can be fetched like so.
-        var result = await _supabase.From<UrlBookmark>().Select(x => new object[] { x.Id }).Get();
+        var result = await _supabase
+            .From<UrlBookmark>()
+            .Filter("id", Supabase.Postgrest.Constants.Operator.Equals, id)
+            .Get();
         return result.Model ?? null;
     }
 }
