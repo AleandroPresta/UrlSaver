@@ -7,8 +7,7 @@ namespace UrlSaver.Domain;
 [Table("UrlBookmarks")]
 public class UrlBookmark : BaseModel
 {
-    [PrimaryKey]
-    [Column("id")]
+    [PrimaryKey("id", false)]
     public int Id { get; set; }
 
     [Column("name")]

@@ -2,11 +2,16 @@ namespace UrlSaver.Features.DeleteBookmark;
 
 public class DeleteBookmarkService
 {
-    public DeleteBookmarkService() { }
+    private readonly Supabase.Client _supabase;
+
+    public DeleteBookmarkService(Supabase.Client supabase)
+    {
+        _supabase = supabase;
+    }
 
     public async Task<int> Delete(int id)
     {
-        Console.WriteLine($"Deleting bookmark with Id: {id}");
+        await _supabase.From<UrlBookmark>().Where(x => x.Id == id).Delete();
         return id;
     }
 }
