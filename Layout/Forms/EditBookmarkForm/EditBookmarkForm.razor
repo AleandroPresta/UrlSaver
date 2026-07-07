@@ -2,24 +2,31 @@
 @inject EditBookmarkService _editService
 @inject GetBookmarkService _getService
 
-<EditForm Model="_bookmark" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit" FormName="EditBookmarkForm">
-    <DataAnnotationsValidator />
-    <div class="mb-3">
-        <label for="nameControl" class="form-label">Name</label>
-        <InputText @bind-Value="_bookmark.Name" class="form-control" id="nameControl" />
+<div class="d-flex align-items-center justify-content-center w-100">
+    <div class="bg-secondary mb-3 text-white card" style="min-width: 30rem; max-width: 40rem;">
+        <div class="card-header">Create a new bookmark</div>
+        <div class="card-body">
+            <EditForm Model="_bookmark" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit"
+                      FormName="EditBookmarkForm">
+                <DataAnnotationsValidator />
+                <div class="mb-3">
+                    <label for="nameControl" class="form-label">Name</label>
+                    <InputText @bind-Value="_bookmark.Name" class="form-control" id="nameControl" />
+                </div>
+                <div class="mb-3">
+                    <label for="urlControl" class="form-label">Url</label>
+                    <InputText @bind-Value="_bookmark.Url" class="form-control" id="urlControl" />
+                </div>
+                <div class="mb-3">
+                    <label for="descriptionControl" class="form-label">Description</label>
+                    <InputTextArea @bind-Value="_bookmark.Description" class="form-control" id="descriptionControl"
+                                   rows="3" />
+                </div>
+                <button class="btn btn-primary" type="submit">Edit</button>
+            </EditForm>
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="urlControl" class="form-label">Url</label>
-        <InputText @bind-Value="_bookmark.Url" class="form-control" id="urlControl" />
-    </div>
-    <div class="mb-3">
-        <label for="descriptionControl" class="form-label">Description</label>
-        <InputTextArea @bind-Value="_bookmark.Description" class="form-control" id="descriptionControl" rows="3" />
-    </div>
-
-    <button class="btn btn-primary" type="submit">Edit</button>
-</EditForm>
-
+</div>
 @code {
     [Parameter]
     public int Id { get; set; }
