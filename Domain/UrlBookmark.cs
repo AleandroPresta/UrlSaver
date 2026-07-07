@@ -18,7 +18,7 @@ public class UrlBookmark : BaseModel
     [Column("url")]
     [Url(ErrorMessage = "Please enter a valid URL")]
     [Required(ErrorMessage = "Url is required")]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = "Name must be 2-50 characters")]
+    [StringLength(200, MinimumLength = 2, ErrorMessage = "Name must be 2-200 characters")]
     public string? Url { get; set; }
 
     [Column("description")]
