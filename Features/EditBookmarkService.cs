@@ -15,15 +15,15 @@ public class EditBookmarkService
             .From<UrlBookmark>()
             .Where(x => x.Id == updatedBookmark.Id)
             .Single();
-        if (!string.IsNullOrWhiteSpace(currentBookmark?.Name))
+        if (!string.IsNullOrWhiteSpace(updatedBookmark?.Name))
         {
             currentBookmark.Name = updatedBookmark.Name;
         }
-        if (!string.IsNullOrWhiteSpace(currentBookmark?.Description))
+        if (!string.IsNullOrWhiteSpace(updatedBookmark?.Description))
         {
             currentBookmark.Description = updatedBookmark.Description;
         }
-        if (!string.IsNullOrWhiteSpace(currentBookmark?.Url))
+        if (!string.IsNullOrWhiteSpace(updatedBookmark?.Url))
         {
             currentBookmark.Url = updatedBookmark.Url;
         }
