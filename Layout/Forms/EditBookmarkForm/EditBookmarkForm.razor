@@ -3,7 +3,7 @@
 @inject GetBookmarkService _getService
 
 <div class="d-flex align-items-center justify-content-center w-100">
-    <div class="bg-secondary mb-3 text-white card" style="min-width: 30rem; max-width: 40rem;">
+    <div class="bg-secondary mb-3 w-100 text-white card" style="max-width: 40rem;">
         <div class="card-header">Create a new bookmark</div>
         <div class="card-body">
             <EditForm Model="_bookmark" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit"
