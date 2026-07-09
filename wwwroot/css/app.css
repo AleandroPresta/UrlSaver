@@ -127,7 +127,8 @@ h2 {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  color: var(--bs-body-color) !important;
+  color: #000 !important;
+  -webkit-text-fill-color: #000;
 }
 
 .search-btn {
@@ -149,15 +150,22 @@ h2 {
   flex-wrap: wrap;
   gap: var(--app-space-3);
   align-items: stretch;
+  isolation: isolate;
 }
 
 .bookmark-card {
   width: min(25rem, 100%);
+  position: relative;
+  overflow: visible;
   border: 1px solid rgba(var(--bs-secondary-rgb), 0.45);
   border-radius: var(--app-card-radius);
   background: linear-gradient(180deg, rgba(var(--bs-dark-rgb), 0.95), rgba(var(--bs-dark-rgb), 0.82));
   box-shadow: var(--bs-box-shadow-sm);
   transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.bookmark-card:focus-within {
+  z-index: 20;
 }
 
 .bookmark-card:hover {
@@ -181,6 +189,14 @@ h2 {
 
 .bookmark-actions .btn {
   border: 1px solid rgba(var(--bs-light-rgb), 0.08);
+}
+
+.bookmark-actions {
+  position: relative;
+}
+
+.bookmark-actions .dropdown-menu {
+  z-index: 1200;
 }
 
 .bookmark-form-shell {
