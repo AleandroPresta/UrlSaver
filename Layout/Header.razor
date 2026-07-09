@@ -26,7 +26,8 @@
         <div class="collapse navbar-collapse" id="mainNav">
 
             <!-- Centered Search Form -->
-            <form class="d-flex mx-auto my-3 my-lg-0 col-12 col-lg-6" role="search" @onsubmit:preventDefault>
+            <form class="d-flex mx-auto my-3 my-lg-0 col-12 col-lg-6" role="search" @onsubmit="HandleSearch"
+                  @onsubmit:preventDefault>
                 <div class="input-group px-1 py-1 rounded-pill w-100 overflow-hidden search-wrapper">
                     <input @bind="SearchText" @onkeydown="HandleKeyDown" class="px-4 py-2 form-control search-input" type="search"
                            placeholder="Find saved links, tags, or collections..." aria-label="Search">
