@@ -9,9 +9,18 @@ public class GetBookmarksService
         _supabase = supabase;
     }
 
-    public async Task<List<UrlBookmark>> GetBookmarks()
+    public async Task<List<UrlBookmark>> GetBookmarks(string? searchTerm, int pageNo, int pageSize)
     {
-        var result = await _supabase.From<UrlBookmark>().Get();
+        var query = _supabase.From<UrlBookmark>();
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            _ = query.Where(x =>
+                x.Name!.ToLower().Contains(searchTerm.ToLower())
+                || x.Description!.ToLower().Contains(searchTerm.ToLower())
+                || x.Url!.ToLower().Contains(searchTerm.ToLower())
+            );
+        }
+        var result = await query.Get();
         return result.Models ?? [];
     }
 }
