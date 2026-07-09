@@ -1,20 +1,87 @@
-﻿<header>
-    <nav class="bg-light navbar">
-        <div class="container">
-            <NavLink href="" Match="NavLinkMatch.All" class="mb-0 navbar-brand h1">@Title</NavLink>
-            <NavLink href="New" class="btn btn-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
+﻿@inject NavigationManager Navigation
+@using Microsoft.AspNetCore.WebUtilities
+
+<nav class="sticky-top mb-3 py-3 navbar navbar-expand-lg navbar-custom">
+    <div class="px-4 container-fluid">
+
+        <!-- Brand -->
+        <a class="d-flex align-items-center gap-2 text-white navbar-brand fw-bolder fs-4" href="#">
+            <div class="d-flex align-items-center justify-content-center rounded text-white brand-icon-wrapper">
+                <!-- Inline SVG: Bookmark Fill -->
+                <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
                      viewBox="0 0 16 16">
                     <path
-                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                    d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z" />
                 </svg>
-                New
-            </NavLink>
+            </div>
+            <NavLink href="" Match="NavLinkMatch.All" class="mb-0 text-white navbar-brand h1">@Title</NavLink>
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button class="shadow-none border-0 navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+
+            <!-- Centered Search Form -->
+            <form class="d-flex mx-auto my-3 my-lg-0 col-12 col-lg-6" role="search" @onsubmit="HandleSearch"
+                  @onsubmit:preventDefault>
+                <div class="input-group px-1 py-1 rounded-pill w-100 overflow-hidden search-wrapper">
+                    <input @bind="SearchText" @onkeydown="HandleKeyDown"
+                           class="px-4 py-2 text-black form-control search-input" type="search"
+                           placeholder="Find saved links, tags, or collections..." aria-label="Search">
+                    <button
+                        class="d-flex align-items-center justify-content-center px-4 border-0 btn search-btn fw-bold"
+                        type="button" @onclick="HandleSearch">
+                        <!-- Inline SVG: Search -->
+                        <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                             fill="currentColor" viewBox="0 0 16 16">
+                            <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Right Side Actions -->
+            <div class="d-flex align-items-center justify-content-end gap-3">
+                <NavLink href="New" class="btn btn-secondary hvr-lift">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                         class="bi bi-plus" viewBox="0 0 16 16">
+                        <path
+                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                    </svg>
+                    New
+                </NavLink>
+            </div>
         </div>
-    </nav>
-</header>
+    </div>
+</nav>
 
 @code {
     [Parameter]
     public string Title { get; init; } = "";
+
+    public string SearchText { get; set; } = "";
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            HandleSearch();
+        }
+    }
+
+    public async Task HandleSearch()
+    {
+        var url = QueryHelpers.AddQueryString("", new Dictionary<string, string?>
+        {
+            ["search"] = SearchText,
+            ["pageNo"] = "1",
+            ["pageSize"] = "10"
+        });
+        Navigation.NavigateTo(Navigation.ToAbsoluteUri(url).ToString());
+    }
 }

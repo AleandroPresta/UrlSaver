@@ -202,3 +202,4 @@ __pycache__/
 # Windows thumbnail cache files
 Thumbs.db
 .env
+.agents
