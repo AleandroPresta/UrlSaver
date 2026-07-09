@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+
 namespace UrlSaver.Features.GetBookmarks;
 
 public class GetBookmarksService
@@ -11,19 +13,30 @@ public class GetBookmarksService
 
     public async Task<List<UrlBookmark>> GetBookmarks(string? searchTerm, int pageNo, int pageSize)
     {
+        var query = _supabase.From<UrlBookmark>().Select("*");
+        // Applying search
         if (!string.IsNullOrEmpty(searchTerm))
         {
-            var query = _supabase
-                .From<UrlBookmark>()
-                .Filter(
-                    x => x.Name!.ToLower(),
-                    Supabase.Postgrest.Constants.Operator.ILike,
-                    $"%{searchTerm.ToLower()}%"
-                );
-            var searchedItems = await query.Get();
-            return searchedItems.Models ?? [];
+            query = query.Filter(
+                x => x.Name!.ToLower(),
+                Supabase.Postgrest.Constants.Operator.ILike,
+                $"%{searchTerm.ToLower()}%"
+            );
         }
-        var result = await _supabase.From<UrlBookmark>().Get();
+
+        // Applying pagination
+        if (pageNo >= 0 && pageSize >= 0)
+        {
+            //Applying pagination
+            int from = (pageNo - 1) * pageSize;
+            int to = from + pageSize - 1;
+
+            query = query.Range(from, to);
+        }
+
+        // Applying sorting
+        query = query.Order("created_at", Supabase.Postgrest.Constants.Ordering.Descending);
+        var result = await query.Get();
         return result.Models ?? [];
     }
 }
