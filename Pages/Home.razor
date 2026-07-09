@@ -25,13 +25,26 @@ else
 }
 
 @code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? Search { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public int PageNo { get; set; } = 1;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public int PageSize { get; set; } = 10;
+
     List<UrlBookmark> bookmarks = [];
+
     private bool _isLoading = true;
 
     protected override async Task OnParametersSetAsync()
     {
         _isLoading = true;
-        bookmarks = await _service.GetBookmarks();
+        bookmarks = await _service.GetBookmarks(Search, PageNo, PageSize);
         _isLoading = false;
     }
 

@@ -2,8 +2,8 @@
 @inject NavigationManager Navigation
 @inject CreateBookmarkService _service
 
-<div class="d-flex align-items-center justify-content-center w-100">
-    <div class="bg-secondary mb-3 w-100 text-white card" style="max-width: 40rem;">
+<div class="d-flex align-items-center justify-content-center w-100 bookmark-form-shell">
+    <div class="mb-3 w-100 text-white bookmark-form-card card">
         <div class="card-header">Create a new bookmark</div>
         <div class="card-body">
             <EditForm Model="_newBookmark" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit"
@@ -22,7 +22,7 @@
                     <InputTextArea @bind-Value="_newBookmark.Description" class="form-control" id="descriptionControl"
                                    rows="3" />
                 </div>
-                <button class="btn btn-primary" type="submit">Create</button>
+                <button class="btn btn-primary hvr-lift" type="submit">Create</button>
             </EditForm>
         </div>
     </div>

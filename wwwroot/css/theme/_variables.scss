@@ -39,7 +39,7 @@ $danger:        $red !default;
 $light:         $gray-500 !default;
 $dark:          $gray-800 !default;
 
-$min-contrast-ratio:   1.9 !default;
+$min-contrast-ratio:   4.5 !default;
 
 // Body
 
@@ -57,7 +57,7 @@ $font-family-sans-serif:      Lato, -apple-system, BlinkMacSystemFont, "Segoe UI
 $h1-font-size:                3rem !default;
 $h2-font-size:                2.5rem !default;
 $h3-font-size:                2rem !default;
-$text-muted:                  $gray-600 !default;
+$text-muted:                  $gray-500 !default;
 
 // Tables
 

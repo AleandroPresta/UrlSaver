@@ -1,11 +1,11 @@
-<div class="card" style="width: 25rem;">
+<div class="bookmark-card card">
   <div class="card-body">
     <!-- Card header -->
-    <div class="d-flex flex-row justify-content-between w-100 card-title">
+    <div class="d-flex flex-row justify-content-between w-100 bookmark-card-title card-title">
       <h5>@bookmark.Name</h5>
       <ActionsDropdown BookmarkId="@bookmark.Id" />
     </div>
-    <p class="text-truncate card-text" style="max-height: 200px;">@bookmark.Description</p>
+    <p class="text-truncate bookmark-card-description card-text">@bookmark.Description</p>
     <a href="@bookmark.Url" class="card-link">Link</a>
   </div>
 </div>
