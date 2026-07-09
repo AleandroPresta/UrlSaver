@@ -11,16 +11,19 @@ public class GetBookmarksService
 
     public async Task<List<UrlBookmark>> GetBookmarks(string? searchTerm, int pageNo, int pageSize)
     {
-        var query = _supabase.From<UrlBookmark>();
         if (!string.IsNullOrEmpty(searchTerm))
         {
-            _ = query.Where(x =>
-                x.Name!.ToLower().Contains(searchTerm.ToLower())
-                || x.Description!.ToLower().Contains(searchTerm.ToLower())
-                || x.Url!.ToLower().Contains(searchTerm.ToLower())
-            );
+            var query = _supabase
+                .From<UrlBookmark>()
+                .Filter(
+                    x => x.Name!.ToLower(),
+                    Supabase.Postgrest.Constants.Operator.ILike,
+                    $"%{searchTerm.ToLower()}%"
+                );
+            var searchedItems = await query.Get();
+            return searchedItems.Models ?? [];
         }
-        var result = await query.Get();
+        var result = await _supabase.From<UrlBookmark>().Get();
         return result.Models ?? [];
     }
 }

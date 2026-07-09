@@ -26,13 +26,13 @@
         <div class="collapse navbar-collapse" id="mainNav">
 
             <!-- Centered Search Form -->
-            <form class="d-flex mx-auto my-3 my-lg-0 col-12 col-lg-6" role="search">
+            <form class="d-flex mx-auto my-3 my-lg-0 col-12 col-lg-6" role="search" @onsubmit:preventDefault>
                 <div class="input-group px-1 py-1 rounded-pill w-100 overflow-hidden search-wrapper">
-                    <input @bind="SearchText" class="px-4 py-2 form-control search-input" type="search"
+                    <input @bind="SearchText" @onkeydown="HandleKeyDown" class="px-4 py-2 form-control search-input" type="search"
                            placeholder="Find saved links, tags, or collections..." aria-label="Search">
                     <button
                         class="d-flex align-items-center justify-content-center px-4 border-0 btn search-btn fw-bold"
-                        type="button">
+                        type="button" @onclick="HandleSearch">
                         <!-- Inline SVG: Search -->
                         <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                              fill="currentColor" viewBox="0 0 16 16">
@@ -64,15 +64,22 @@
 
     public string SearchText { get; set; } = "";
 
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            HandleSearch();
+        }
+    }
+
     public async Task HandleSearch()
     {
-        var url = QueryHelpers.AddQueryString("/", new Dictionary<string, string?>
+        var url = QueryHelpers.AddQueryString("", new Dictionary<string, string?>
         {
             ["search"] = SearchText,
             ["pageNo"] = "1",
             ["pageSize"] = "10"
         });
-
-        Navigation.NavigateTo(url);
+        Navigation.NavigateTo(Navigation.ToAbsoluteUri(url).ToString());
     }
 }
